@@ -3,8 +3,6 @@ package run.ut.app;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -14,17 +12,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author wenjie
  */
-
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
 @MapperScan(basePackages = "run.ut.app.mapper")
-public class UtApplication extends SpringBootServletInitializer {
+public class UtApplication {
 
     private static ConfigurableApplicationContext CONTEXT;
 
     public static void main(String[] args) {
-        System.setProperty("spring.config.additional-location", "file:${user.home}/.ut/");
+        System.setProperty("spring.config.additional-location",
+                "optional:file:${user.home}/.ut/,optional:file:${user.home}/ut-dev/");
         CONTEXT = SpringApplication.run(UtApplication.class);
     }
 
@@ -37,10 +35,4 @@ public class UtApplication extends SpringBootServletInitializer {
         thread.start();
     }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        // Customize the spring config location
-        System.setProperty("spring.config.additional-location", "file:${user.home}/.ut/");
-        return super.configure(builder);
-    }
 }

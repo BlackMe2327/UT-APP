@@ -40,6 +40,10 @@
                 <div class="layui-card-body ">
                     <form class="layui-form layui-col-space5">
                         <div class="layui-inline">
+                            <select id="classify" name="classify" required="" lay-verify="classify" autocomplete="off" class="layui-input">
+                            </select>
+                        </div>
+                        <div class="layui-inline">
                             <input type="text" name="key" lay-verify="search" placeholder="请输入活动标题" autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-inline">
@@ -85,6 +89,7 @@
         var layer = layui.layer;
         var laytpl = layui.laytpl;
         var table = layui.table;
+        var index;
 
         if (store.enabled) {
             var user = store.get('user');
@@ -109,6 +114,7 @@
                         {type: 'radio'}
                         , {field: 'title', title: '标题'}
                         , {field: 'cover', title: '封面图', event: 'photo', templet: '#photoTemplate'}
+                        , {field: 'cname', title: '分类'}
                         , {field: 'appointmentCount', title: '预约数'}
                         , {field: 'startTime', title: '开始时间'}
                         , {field: 'endTime', title: '结束时间'}
@@ -133,12 +139,36 @@
                     }
                 });
 
+                // 加载分类
+                index = layer.load(2);
+                let classifyList;
+                $.ajax({
+                    type: "GET",
+                    url: "${base}/activity/list/activity/classify",
+                    success: function(res){
+                        let data = res.data;
+                        classifyList += "<option value='' selected>请选择分类</option>";
+                        for(let e of data) {
+                            classifyList += "<option value='" + e.id + "'>" + e.cname + "</option>";
+                        }
+                        $("#classify").html(classifyList);
+                        layer.close(index);
+                        form.render();
+                    },
+                    error:function (jqXHR) {
+                        layer.close(index);
+                        failReqHandler("${base}",jqXHR);
+                    }
+                });
+                layer.close(index);
+
                 //搜索
                 form.on('submit(search)', function(data){
                     var data = data.field;
                     activityList.reload({
                         where: {
-                            title: data.key
+                            title: data.key,
+                            classifyId: $("#classify").val()
                         }
                         ,page: {
                             curr: 1
@@ -180,7 +210,7 @@
                                 layer.msg("请选择操作行！", {icon: 5});
                                 return;
                             }
-                            xadmin.open('编辑活动','${base}/admin/activityEdit/'+ checkStatus.data[0].id,800,600);
+                            xadmin.open('编辑活动','${base}/admin/activityEdit/' + checkStatus.data[0].id, 800, 600);
                             break;
                     }
                 });

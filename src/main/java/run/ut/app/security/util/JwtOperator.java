@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import run.ut.app.model.domain.User;
-import run.ut.app.model.enums.UserRolesEnum;
 import run.ut.app.security.token.AuthToken;
 
 import javax.crypto.SecretKey;
@@ -31,7 +30,7 @@ public class JwtOperator {
     private String secret;
 
     // @Value("${expire-time-in-second:1209600}") // 2 weeks
-    @Value("${expire-time-in-second:31536000}") // 10 year
+    @Value("${expire-time-in-second:31536000}") // 10 year for test
     private Long expirationTimeInSecond;
 
     /**

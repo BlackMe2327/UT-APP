@@ -43,8 +43,8 @@ spring:
   ##
   ##########################################################
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.101.156.14:3306/ut?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.101.156.14:3306/ut
     username: ut
     password: 7NcC8RHnyTRNEY4p
     type: com.zaxxer.hikari.HikariDataSource
@@ -107,6 +107,7 @@ mybatis-plus:
     cache-enabled: false
     # 单体应用可以开启一级缓存
     localCacheScope: SESSION
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 ##########################################################
 ##
@@ -131,9 +132,11 @@ netty:
 ##########################################################
 logging:
   file:
-    max-size: 10MB
-    max-history: 20
     path: ${user.home}/.ut/logs
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 20
 ut:
   download-timeout: 5m
 

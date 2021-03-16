@@ -1,14 +1,14 @@
 package run.ut.app.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import run.ut.app.mapper.TagsMapper;
+import run.ut.app.mapper.UserTagsMapper;
 import run.ut.app.model.domain.Tags;
 import run.ut.app.model.domain.UserTags;
-import run.ut.app.mapper.UserTagsMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 import run.ut.app.service.UserTagsService;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class UserTagsServiceImpl extends ServiceImpl<UserTagsMapper, UserTags> i
     @Override
     public List<Tags> listByUid(Long uid) {
         List<UserTags> userTags = list(new QueryWrapper<UserTags>().eq("uid", uid));
-        List<Integer> tagIds = new ArrayList<>();
+        List<Long> tagIds = new ArrayList<>();
         for (UserTags userTag : userTags) {
             tagIds.add(userTag.getTagId());
         }

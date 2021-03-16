@@ -2,12 +2,11 @@
 
 <p>
   <a href="https://gitee.com/Lewage59/UT-WeChat"><img src="https://img.shields.io/badge/前端项目-UT_WeChat%20-orange.svg"></a>
-  <a href="https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/html/"><img src="https://img.shields.io/badge/Spring%20Boot-2.3.1.RELEASE-brightgreen.svg"></a>
+  <a href="https://docs.spring.io/spring-boot/docs/2.4.3/reference/html/"><img src="https://img.shields.io/badge/Spring%20Boot-2.4.3-brightgreen.svg"></a>
   <a href="https://www.mysql.com/"><img src="https://img.shields.io/badge/Mysql-5.7-bringhtgreen.svg"></a>
-  <a href="https://mp.baomidou.com/"><img src="https://img.shields.io/badge/Mybatis_Plus-3.3.1-blue.svg"></a>
+  <a href="https://mp.baomidou.com/"><img src="https://img.shields.io/badge/Mybatis_Plus-3.4.2-blue.svg"></a>
   <a href="https://mp.baomidou.com/"><img src="https://img.shields.io/badge/Netty-4.1.42-brightgreen.svg"></a>
     <a href="https://redis.io/"><img src="https://img.shields.io/badge/redis-5.0.x-red.svg"></a>
-    <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/fastjson-1.2.61-bringhtgreen.svg"></a>
     <a href="https://www.layui.com/"><img src="https://img.shields.io/badge/layui-2.4.5-red.svg"></a>
     <a href="https://github.com/google/guava"><img src="https://img.shields.io/badge/Guava-28_jre-ff69b4.svg"></a>
     <a href="https://github.com/looly/hutool"><img src="https://img.shields.io/badge/hutool-5.0.3-yellow.svg"></a>
@@ -16,8 +15,7 @@
 
 #### 特别说明
 
-- 由于开发者是学生&都在实习，所以进度会以往慢很多。
--  **目前转去维护rebuild分支，该分支日常使用没大问题，但是扩展性和学习性都非常低** = =。
+- 公司、毕业各种事忙，进度比较随缘
 
 #### 介绍 & 各种杂图
 
@@ -48,7 +46,7 @@ run.ut.app
 ├── exception -- 异常定义、处理相关。
 ├── handler -- 一些处理器
 ├── listener -- 监听事件并处理
-├── mail -- 邮件相关代码
+├── other.mail -- 邮件相关代码
 ├── mapper -- MyBaits的mapper
 ├── model -- 存放DOMAIN、DTO、VO、Param等实体
 ├── netty -- netty的一些代码，目前只用于搭建WebSocket服务
@@ -61,14 +59,17 @@ run.ut.app
 
 #### 计划实现
 
-- websocket实时推送消息（Netty实现）...✔
-- 组队...✔
-- bbs...✔
-- 校园活动发布/订阅...✔
-- 用户个人信息的完善（绑定邮箱等）...✔
-- 后台管理可动态修改一些配置，如oss配置等...✔
-- sql、索引的优化（当前在索引方面完善得差不多了，但还剩下比较多的坏sql，后续打算引入搜索引擎替代掉）..ing
-- 已zookeeper+dubbo为辅助，将消息推送拆出来（学习中）...ing
+- ✅ websocket实时推送消息（Netty实现）
+- ✅ 组队
+- ✅ bbs
+- ✅ 校园活动发布/订阅
+- ✅ 用户个人信息的完善（绑定邮箱等）
+- ✅ 后台管理可动态修改一些配置，如oss配置等
+- ✅ 用搜索引擎替代部分sql查询（在re-build分支完成了）
+- ⏰ 活动添加分类
+- ⏰ 队伍要半数或以上同意才解散
+- ⏰ 增加接口测试用例，便于后续测试迭代
+- ❌ 已zookeeper+dubbo为辅助，将消息推送拆出来（在这个分支不打算拆）
 
 （到此再稳定下现有的功能后就相当于第一个Release版本了，大概~）
 
@@ -76,9 +77,9 @@ run.ut.app
 
 - 聊天...ing（研究方案中，在上面的介绍文档中补充了IM服务架构和时序图）
 - 校园活动内容支持markdown...ing（待讨论）
-- 上传的图片支持存到本地磁盘...ing（待讨论）
 - 举报机制..ing（计划中，因为客服功能的存在，有可能不需要）
 - 活动开始前一天或一段时间，发送邮件推送提醒...ing（待讨论）
+- ❌ 上传的图片支持存到本地磁盘...（暂不支持）
 - ...更多
 
 以上功能优先级从上至下递减
@@ -93,5 +94,10 @@ run.ut.app
 #### 鸣谢
 
 - 特别感谢[@施晓权](https://gitee.com/sxq2017)提供的服务器，用于部署jenkins等应用。
+
+#### 字节内推
+
+- 内推传送门：https://job.toutiao.com/s/JXN9TDV
+
 
 

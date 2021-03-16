@@ -3,10 +3,13 @@ package run.ut.app.api;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PathVariable;
+import run.ut.app.model.dto.ActivityClassifyDTO;
 import run.ut.app.model.param.SearchActivityParam;
 import run.ut.app.model.support.BaseResponse;
 import run.ut.app.model.support.CommentPage;
 import run.ut.app.model.vo.ActivityVO;
+
+import java.util.List;
 
 /**
  * @author wenjie
@@ -38,5 +41,6 @@ public interface ActivityControllerApi {
     @ApiOperation(value = "获取用户预约的活动")
     CommentPage<ActivityVO> listSelfAppointment(Integer pageNum, Integer pageSize);
 
-
+    @ApiOperation(value = "查询活动分类（所有）")
+    List<ActivityClassifyDTO> classifyList();
 }
