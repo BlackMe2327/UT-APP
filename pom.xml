@@ -43,6 +43,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
+        </dependency>
         <!-- 引入spring aop依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

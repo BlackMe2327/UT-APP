@@ -6,17 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import run.ut.app.api.AreaControllerApi;
-import run.ut.app.model.dto.DataAreaDTO;
-import run.ut.app.model.dto.DataSchoolDTO;
 import run.ut.app.model.support.BaseResponse;
-import run.ut.app.service.DataAreaService;
-import run.ut.app.service.DataSchoolService;
-import run.ut.app.utils.BeanUtils;
 import run.ut.app.utils.JsonUtils;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author wenjie
