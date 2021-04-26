@@ -8,8 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import run.ut.app.model.dto.ChatHistoryDTO;
 import run.ut.app.model.enums.WebSocketMsgTypeEnum;
-import run.ut.app.model.support.WebSocketMsg;
+import run.ut.app.netty.msg.ClientMsgHandlers;
 import run.ut.app.utils.JsonUtils;
 
 
@@ -24,17 +25,16 @@ import run.ut.app.utils.JsonUtils;
 public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     private final UserChannelManager userChannelManager;
+    private final ClientMsgHandlers clientMsgHandlers;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg)
         throws Exception {
+        // todo 套进线程池
         String json = msg.text();
-        WebSocketMsg webSocketMsg = JsonUtils.jsonToObject(json, WebSocketMsg.class);
-        WebSocketMsgTypeEnum type = WebSocketMsgTypeEnum.getByType(webSocketMsg.getType());
-        switch (type) {
-            case KEEPALIVE:
-                log.debug("Get keepalive frame");
-        }
+        ChatHistoryDTO chatHistoryDTO = JsonUtils.jsonToObject(json, ChatHistoryDTO.class);
+        WebSocketMsgTypeEnum type = WebSocketMsgTypeEnum.getByType(chatHistoryDTO.getType());
+        clientMsgHandlers.handle(ctx, type, chatHistoryDTO);
     }
 
     @Override

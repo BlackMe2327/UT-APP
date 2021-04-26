@@ -1,6 +1,6 @@
 package run.ut.app.model.enums;
 
-import com.baomidou.mybatisplus.core.enums.IEnum;
+import com.baomidou.mybatisplus.annotation.IEnum;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
@@ -19,7 +19,15 @@ public enum WebSocketMsgTypeEnum implements IEnum<Integer>, Serializable {
     COMMENT(3, "帖子评论/回复"),
 
     AUTH(1000, "身份认证"),
-    KEEPALIVE(1001, "心跳包");
+    KEEPALIVE(1001, "心跳包"),
+
+    //聊天信息
+    TEXT_MSG(2000, "文本消息"),
+    IMG_MSG(2001, "图片"),
+
+    //ACK
+    SERVER_ACK(3001, "服务端返回ack"),
+    CLIENT_ACK(3002, "客户端返回ack");
 
     private int type;
 
