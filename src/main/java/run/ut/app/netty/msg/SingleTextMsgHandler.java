@@ -14,7 +14,7 @@ import run.ut.app.netty.UserChannelManager;
 import run.ut.app.service.ChatHistoryService;
 
 /**
- * keep-alive frame handler
+ * text msg handler
  *
  * @author chenwenjie.star
  * @date 2021/4/26 11:35 上午
@@ -22,7 +22,7 @@ import run.ut.app.service.ChatHistoryService;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TextMsgHandler implements ClientMsgHandler {
+public class SingleTextMsgHandler implements ClientMsgHandler {
 
     private final UserChannelManager userChannelManager;
     private final ChatHistoryService chatHistoryService;
@@ -45,18 +45,15 @@ public class TextMsgHandler implements ClientMsgHandler {
         // 持久化消息
         ChatHistory chatHistory = chatHistoryDTO.convertTo();
         chatHistoryService.save(chatHistory);
+        chatHistoryDTO = chatHistory.convertTo();
         // 返回server-ack给发送者
-        userChannelManager.writeAndFlush(
-                uid, chatHistory.getId(), WebSocketMsgTypeEnum.SERVER_ACK
-        );
-        // 判断目标用户时候有设备在线，有则推送
-        userChannelManager.writeAndFlush(
-                chatHistory.getToUid(), chatHistory, WebSocketMsgTypeEnum.TEXT_MSG
-        );
+        userChannelManager.writeAndFlushServerAck(chatHistoryDTO);
+        // 用户在线则推送，客户端确认接收后会返回ack，那时候消息才会更改为已读状态
+        userChannelManager.writeAndFlushChatMsg(chatHistoryDTO);
     }
 
     @Override
     public boolean support(WebSocketMsgTypeEnum typeEnum) {
-        return typeEnum.equals(WebSocketMsgTypeEnum.TEXT_MSG);
+        return typeEnum.equals(WebSocketMsgTypeEnum.SINGLE_IMG_MSG);
     }
 }

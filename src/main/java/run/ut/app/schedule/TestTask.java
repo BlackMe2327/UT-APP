@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import run.ut.app.model.dto.ChatHistoryDTO;
 import run.ut.app.model.enums.WebSocketMsgTypeEnum;
 import run.ut.app.netty.UserChannelManager;
 import run.ut.app.service.RedisService;
+
+import java.util.Date;
 
 /**
  * Reset channel cache task
@@ -41,4 +44,18 @@ public class TestTask {
         redisService.set(key, value);
     }
 
+    @Scheduled(cron = "0 0/1 * * * ?")
+    @Async
+    public void chatMsgReSend() throws JsonProcessingException {
+        userChannelManager.writeAndFlushChatMsg(
+                new ChatHistoryDTO()
+                        .setId(1L)
+                        .setFromUid(214L)
+                        .setToUid(21L)
+                        .setContent("测试内容")
+                        .setMsgRead(-1)
+                        .setTimeStamp(new Date().getTime())
+                        .setType(WebSocketMsgTypeEnum.SINGLE_IMG_MSG.getType())
+        );
+    }
 }
