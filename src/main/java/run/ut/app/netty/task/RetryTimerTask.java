@@ -32,16 +32,21 @@ public class RetryTimerTask implements TimerTask {
 
     @Override
     public void run(Timeout timeout) throws Exception {
+        // 根据反射获取状态？
         if (timeout.isCancelled()) {
             return;
         }
-        task.run(timeout);
-        if ((++retryTimes) >= retries) {
-            // 重试次数超过了设置的值
-            log.debug("失败重试次数超过阈值: {}，不再重试", retries);
-            timeout.cancel();
-        } else {
-            rePut(timeout);
+        try {
+            task.run(timeout);
+        } catch (Exception e) {
+            log.warn("推送聊天消息异常，错误信息：{}", e.getMessage());
+            if ((++retryTimes) >= retries) {
+                // 重试次数超过了设置的值
+                log.debug("失败重试次数超过阈值: {}，不再重试", retries);
+                timeout.cancel();
+            } else {
+                rePut(timeout);
+            }
         }
     }
 

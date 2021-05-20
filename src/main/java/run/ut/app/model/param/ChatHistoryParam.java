@@ -30,12 +30,11 @@ public class ChatHistoryParam implements Serializable {
     private Long targetUid;
 
     @ApiModelProperty(value = "消息id", notes = "消息id为空则获取最近历史消息，不为空则根据type获取历史/最新消息")
-    private Long classifyId;
+    private Long chatId;
 
     @ApiModelProperty(value = "获取消息数")
-    private String count;
+    private Integer count = 20;
 
-    @ApiModelProperty(value = "-1 - 获取历史消息 1 - 获取消息id之后的消息，即新消息")
-    @NotNull(message = "type不能为空")
+    @ApiModelProperty(value = "id不为空时 -1则 获取历史消息 1则 获取最新消息")
     private Integer type;
 }
