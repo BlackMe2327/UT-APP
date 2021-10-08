@@ -46,7 +46,6 @@ public class DataArea implements Serializable {
     private Float latitude;
 
     @ApiModelProperty(value = "等级(1省/直辖市,2地级市,3区县,4镇/街道)")
-    @JsonSerialize(using = ToStringSerializer.class)
     private DataAreaLevelEnum level;
 
     @ApiModelProperty(value = "排序")

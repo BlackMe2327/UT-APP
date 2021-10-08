@@ -22,7 +22,7 @@ public class LoginApiTest extends BaseApiTest {
     /**
      * 管理员登陆校验
      */
-    @Test
+    @Test(testName = "管理员登录")
     public void adminLoginTest() throws Exception {
         // 使用包含全部信息的账号测试
         cacheAdminLogin();
@@ -54,7 +54,7 @@ public class LoginApiTest extends BaseApiTest {
     /**
      * 游客登陆校验
      */
-    @Test
+    @Test(testName = "游客登陆")
     public void touristLoginTest() throws Exception {
         // 使用包含全部信息的账号测试
         cacheTouristLogin();
@@ -86,7 +86,7 @@ public class LoginApiTest extends BaseApiTest {
     /**
      * 学生登陆校验
      */
-    @Test
+    @Test(testName = "学生登陆")
     public void StudentLoginTest() throws Exception {
         // 使用包含全部信息的账号测试
         cacheStudentLogin();

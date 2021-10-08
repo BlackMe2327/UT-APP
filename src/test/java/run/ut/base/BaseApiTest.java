@@ -91,6 +91,12 @@ public class BaseApiTest extends AbstractTestNGSpringContextTests {
 
     /**
      * http请求
+     *
+     * @param headers       请求头
+     * @param method        请求方法
+     * @param unJsonObject  该对象会被转化为json再发送
+     * @param uri           请求地址
+     * @param uriVars       restful风格api才需要
      */
     public BaseResponse httpRequest(
             String uri, HttpHeaders headers,
@@ -128,7 +134,7 @@ public class BaseApiTest extends AbstractTestNGSpringContextTests {
         emailLoginParam.setEmail(email);
         emailLoginParam.setCode(code);
 
-        BaseResponse baseResponse = httpRequest(LOGIN_PATH, null, emailLoginParam, HttpMethod.POST, UserDTO.class);
+        BaseResponse baseResponse = httpRequest(LOGIN_PATH, null, emailLoginParam, HttpMethod.POST);
         return JsonUtils.mapToObject((Map<?, ?>) baseResponse.getData(), UserDTO.class);
     }
 
@@ -186,11 +192,16 @@ public class BaseApiTest extends AbstractTestNGSpringContextTests {
         return loginByStudent().getToken().getAccessToken();
     }
 
-
-
-
-
-
-
+    /**
+     * 构造带有token的请求头对象
+     *
+     * @param token    token
+     * @return         带有token的请求头对象
+     */
+    public HttpHeaders generatorHeaderByToken(String token) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("UT-Token", token);
+        return headers;
+    }
 
 }

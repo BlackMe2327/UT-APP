@@ -1,6 +1,7 @@
 package run.ut.app.model.support;
 
 import cn.hutool.core.codec.Base64Decoder;
+import cn.hutool.core.codec.Base64Encoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -76,5 +77,23 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
         }
 
         return new BASE64DecodedMultipartFile(b, baseStrs[0]);
+    }
+
+
+    public static String imageToBase64(File file) throws FileNotFoundException {
+
+        InputStream in = new FileInputStream(file);
+        byte[] data = null;
+
+        // 读取图片字节数组
+        try {
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "data:image/jpeg;base64," + Base64Encoder.encode(data);
     }
 }

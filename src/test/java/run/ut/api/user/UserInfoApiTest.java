@@ -17,26 +17,26 @@ import run.ut.utils.AssertUtil;
 import java.util.Map;
 
 /**
+ * 用户信息Test
+ *
  * @author chenwenjie.star
  * @date 2021/7/30 6:33 下午
  */
 @Slf4j
 @ActiveProfiles("not-websocket")
-public class UserApiTest extends BaseApiTest {
+public class UserInfoApiTest extends BaseApiTest {
 
-    private final String SHOW_SELF_PAGE = "/user/showSelfPage";
+    private final String SHOW_SELF_PAGE_API = "/user/showSelfPage";
 
     /**
      * 测试个人完整信息，使用信息齐全的账号
      */
-    @Test
+    @Test(testName = "获取自己信息")
     public void showSelfPageTest(ITestContext context) throws Exception {
         String token = getAdminToken();
+        HttpHeaders headers = generatorHeaderByToken(token);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("UT-Token", token);
-
-        BaseResponse response = httpRequest(SHOW_SELF_PAGE, headers, null, HttpMethod.GET);
+        BaseResponse response = httpRequest(SHOW_SELF_PAGE_API, headers, null, HttpMethod.GET);
         StudentVO studentVO = JsonUtils.mapToObject((Map<?, ?>) response.getData(), StudentVO.class);
 
         AssertUtil.assertEquals(response.getStatus().intValue(),  200, "响应值!=200");

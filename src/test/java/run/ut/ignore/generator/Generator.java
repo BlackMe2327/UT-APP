@@ -1,4 +1,4 @@
-package run.ut.generator;
+package run.ut.ignore.generator;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
