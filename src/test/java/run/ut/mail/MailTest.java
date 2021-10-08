@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import run.ut.app.UtApplication;
 import run.ut.app.mail.MailService;
@@ -21,6 +22,7 @@ import java.util.Map;
  */
 @SpringBootTest(classes = UtApplication.class)
 @Slf4j
+@Ignore
 public class MailTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
