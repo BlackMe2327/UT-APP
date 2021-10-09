@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.util.ObjectUtils;
 import org.testng.annotations.BeforeTest;
@@ -64,6 +65,15 @@ public class BaseApiTest extends AbstractTestNGSpringContextTests {
     private final String CODE = "123456";
 
     /**
+     * 是否打印响应信息
+     */
+    private boolean printRes = true;
+
+    public void setPrintRes(boolean printRes) {
+        this.printRes = printRes;
+    }
+
+    /**
      * 缓存管理员登陆邮箱+验证码
      */
     public void cacheAdminLogin() {
@@ -112,9 +122,13 @@ public class BaseApiTest extends AbstractTestNGSpringContextTests {
             request.headers(headers);
         }
 
-        MvcResult mvcResult = mvc.perform(
+        ResultActions perform = mvc.perform(
                 request.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
-        ).andDo(print()).andReturn();
+        );
+        if (printRes) {
+            perform.andDo(print());
+        }
+        MvcResult mvcResult = perform.andReturn();
 
         String response = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
         return JsonUtils.jsonToObject(response, BaseResponse.class);

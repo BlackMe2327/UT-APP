@@ -84,6 +84,9 @@ public class ApplyRoleTest extends BaseApiTest {
     @Test(testName = "证件照文件超过10mb")
     public void uploadToLargeFile(ITestContext context) throws Exception {
 
+        // 日志过长，关闭打印
+        setPrintRes(false);
+
         String fileToBase64 = BASE64DecodedMultipartFile.
                 imageToBase64(ResourceUtils.getFile("classpath:image/10mb_plus.png"));
         UserInfoParam userInfoParam2 = BeanUtils.toBean(ApplyRoleTest.userInfoParam, UserInfoParam.class);
@@ -102,6 +105,8 @@ public class ApplyRoleTest extends BaseApiTest {
         AssertUtil.assertEquals(res.getStatus().intValue(), 400, "文件超过10mb上传成功了");
 
         deleteApplyByUid(userDTO.getUid());
+
+        setPrintRes(true);
     }
 
 
