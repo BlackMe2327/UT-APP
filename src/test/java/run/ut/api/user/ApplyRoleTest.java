@@ -81,6 +81,26 @@ public class ApplyRoleTest extends BaseApiTest {
         deleteApplyByUid(userDTO.getUid());
     }
 
+    @Test(testName = "重复申请认证")
+    public void repeatApplication(ITestContext context) throws Exception {
+        // 清除可能遗留的历史数据
+        UserDTO userDTO = loginByTourist();
+        deleteApplyByUid(userDTO.getUid());
+
+        String token = getTouristToken();
+        HttpHeaders headers = generatorHeaderByToken(token);
+
+        // 第一次申请
+        BaseResponse res = httpRequest(APPLY_ROLE_API, headers, userInfoParam, HttpMethod.POST);
+        AssertUtil.assertEquals(res.getStatus().intValue(), 200, "申请角色失败，返回码 != 200");
+
+        // 再次申请
+        res = httpRequest(APPLY_ROLE_API, headers, userInfoParam, HttpMethod.POST);
+        AssertUtil.assertEquals(res.getStatus().intValue(), 400, "重复申请返回码 != 400");
+
+        deleteApplyByUid(userDTO.getUid());
+    }
+
     @Test(testName = "证件照文件超过10mb")
     public void uploadToLargeFile(ITestContext context) throws Exception {
 
