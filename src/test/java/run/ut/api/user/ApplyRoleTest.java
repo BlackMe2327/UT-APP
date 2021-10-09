@@ -14,6 +14,7 @@ import run.ut.app.model.param.UserInfoParam;
 import run.ut.app.model.support.BASE64DecodedMultipartFile;
 import run.ut.app.model.support.BaseResponse;
 import run.ut.app.service.UserInfoService;
+import run.ut.app.utils.BeanUtils;
 import run.ut.base.BaseApiTest;
 import run.ut.utils.AssertUtil;
 
@@ -40,7 +41,7 @@ public class ApplyRoleTest extends BaseApiTest {
     static {
         String imageToBase64 = "";
         try {
-            imageToBase64 = BASE64DecodedMultipartFile.imageToBase64(ResourceUtils.getFile("classpath:image/机器人logo.png"));
+            imageToBase64 = BASE64DecodedMultipartFile.imageToBase64(ResourceUtils.getFile("classpath:image/4KB_image.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -67,7 +68,7 @@ public class ApplyRoleTest extends BaseApiTest {
 
     @Test(testName = "登陆+游客成功申请权限")
     public void applyByTourist(ITestContext context) throws Exception {
-        // 清楚可能遗留的历史数据
+        // 清除可能遗留的历史数据
         UserDTO userDTO = loginByTourist();
         deleteApplyByUid(userDTO.getUid());
 
@@ -76,6 +77,29 @@ public class ApplyRoleTest extends BaseApiTest {
 
         BaseResponse res = httpRequest(APPLY_ROLE_API, headers, userInfoParam, HttpMethod.POST);
         AssertUtil.assertEquals(res.getStatus().intValue(), 200, "申请角色失败，返回码 != 200");
+
+        deleteApplyByUid(userDTO.getUid());
+    }
+
+    @Test(testName = "证件照文件超过10mb")
+    public void uploadToLargeFile(ITestContext context) throws Exception {
+
+        String fileToBase64 = BASE64DecodedMultipartFile.
+                imageToBase64(ResourceUtils.getFile("classpath:image/10mb_plus.png"));
+        UserInfoParam userInfoParam2 = BeanUtils.toBean(ApplyRoleTest.userInfoParam, UserInfoParam.class);
+        userInfoParam2
+                .setCredentialsPhotoFront(fileToBase64)
+                .setCredentialsPhotoReverse(fileToBase64);
+
+        // 清除可能遗留的历史数据
+        UserDTO userDTO = loginByTourist();
+        deleteApplyByUid(userDTO.getUid());
+
+        String token = getTouristToken();
+        HttpHeaders headers = generatorHeaderByToken(token);
+
+        BaseResponse res = httpRequest(APPLY_ROLE_API, headers, userInfoParam2, HttpMethod.POST);
+        AssertUtil.assertEquals(res.getStatus().intValue(), 400, "文件超过10mb上传成功了");
 
         deleteApplyByUid(userDTO.getUid());
     }

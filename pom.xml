@@ -313,7 +313,10 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven-checkstyle-plugin.version}</version>
                 <configuration>
-                    <configLocation>${project.basedir}/checkStyle.xml</configLocation>
+<!--                    本地配置-->
+<!--                    <configLocation>${project.basedir}/checkStyle.xml</configLocation>-->
+<!--                    cicd配置-->
+                    <configLocation>./UT-APP/checkStyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
                 </configuration>
                 <executions>

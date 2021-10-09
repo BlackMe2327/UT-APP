@@ -151,7 +151,7 @@ logging:
       max-file-size: 10MB
       max-history: 20
   level:
-    run.ut.app: debug
+    run.ut.app: info
 ut:
   download-timeout: 5m
 
