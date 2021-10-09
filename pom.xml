@@ -314,9 +314,9 @@
                 <version>${maven-checkstyle-plugin.version}</version>
                 <configuration>
 <!--                    本地配置-->
-<!--                    <configLocation>${project.basedir}/checkStyle.xml</configLocation>-->
+<!--                    <configLocation>${project.basedir}/checkstyle.xml</configLocation>-->
 <!--                    cicd配置-->
-                    <configLocation>${project.basedir}/UT-APP/checkStyle.xml</configLocation>
+                    <configLocation>${project.basedir}/checkstyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
                 </configuration>
                 <executions>
