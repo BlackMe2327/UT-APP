@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
  */
 @Slf4j
 @ActiveProfiles("not-websocket")
-public class ApplyRoleTest extends BaseApiTest {
+public class ApplyRoleApiTest extends BaseApiTest {
 
     private final String APPLY_ROLE_API = "/user/applyForCertification";
 
@@ -63,7 +63,7 @@ public class ApplyRoleTest extends BaseApiTest {
     public void applyUnLogin(ITestContext context) throws Exception {
 
         BaseResponse res = httpRequest(APPLY_ROLE_API, null, userInfoParam, HttpMethod.POST);
-        AssertUtil.assertEquals((int) res.getStatus(), 401, "没登陆申请权限范围码 != 401");
+        AssertUtil.assertEquals((int) res.getStatus(), 401, "没登陆申请权限返回码 != 401");
     }
 
     @Test(testName = "登陆+游客成功申请权限")
@@ -109,7 +109,7 @@ public class ApplyRoleTest extends BaseApiTest {
 
         String fileToBase64 = BASE64DecodedMultipartFile.
                 imageToBase64(ResourceUtils.getFile("classpath:image/10mb_plus.png"));
-        UserInfoParam userInfoParam2 = BeanUtils.toBean(ApplyRoleTest.userInfoParam, UserInfoParam.class);
+        UserInfoParam userInfoParam2 = BeanUtils.toBean(ApplyRoleApiTest.userInfoParam, UserInfoParam.class);
         userInfoParam2
                 .setCredentialsPhotoFront(fileToBase64)
                 .setCredentialsPhotoReverse(fileToBase64);

@@ -22,6 +22,7 @@ import run.ut.app.model.param.EmailLoginParam;
 import run.ut.app.model.support.BaseResponse;
 import run.ut.app.service.RedisService;
 import run.ut.app.utils.JsonUtils;
+import run.ut.utils.csv.TestObject;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -116,7 +117,11 @@ public class BaseApiTest extends AbstractTestNGSpringContextTests {
 
         MockHttpServletRequestBuilder request = request(method, uri, uriVars);
         if (!ObjectUtils.isEmpty(unJsonObject)) {
-            request.content(JsonUtils.objectToJson(unJsonObject));
+            if (unJsonObject.getClass() == String.class) {
+                request.content((String) unJsonObject);
+            } else {
+                request.content(JsonUtils.objectToJson(unJsonObject));
+            }
         }
         if (!ObjectUtils.isEmpty(headers) && !headers.isEmpty()) {
             request.headers(headers);
@@ -216,6 +221,10 @@ public class BaseApiTest extends AbstractTestNGSpringContextTests {
         HttpHeaders headers = new HttpHeaders();
         headers.add("UT-Token", token);
         return headers;
+    }
+
+    protected void printTestTitle(TestObject testObject) {
+        log.info("当前测试用例为：【{}】", testObject.getTestTitle());
     }
 
 }

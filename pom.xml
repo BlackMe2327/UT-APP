@@ -41,6 +41,7 @@
         <velocity-engine-core.version>2.2</velocity-engine-core.version>
         <testng.version>7.4.0</testng.version>
         <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+        <jcsv.version>1.4.0</jcsv.version>
     </properties>
 
     <dependencies>
@@ -284,6 +285,11 @@
             <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.jcsv</groupId>
+            <artifactId>jcsv</artifactId>
+            <version>${jcsv.version}</version>
+        </dependency>
 
         <!--        todo 检查版本更新状况-->
         <dependency>
@@ -295,6 +301,15 @@
     </dependencies>
 
     <build>
+        <testResources>
+            <testResource>
+                <filtering>false</filtering>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**/*.csv</include>
+                </includes>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

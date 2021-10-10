@@ -1,0 +1,4 @@
+TestObject.testTitle,TestObject.testMethod,TestObject.paramJson,TestObject.respCode
+认证用户正常设置tag,studentSetTag,"[1, 2, 3]",200
+设置tag > 3,studentSetTag,"[1, 2, 3, 4]",400
+设置不存在的tag,studentSetTag,"[1, 2, 99999]",400
