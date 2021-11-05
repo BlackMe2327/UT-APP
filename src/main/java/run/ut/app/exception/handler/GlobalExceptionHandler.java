@@ -33,7 +33,6 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public BaseResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
