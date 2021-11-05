@@ -44,10 +44,7 @@ public class GlobalErrorController extends BasicErrorController {
         Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
         if (throwable instanceof UtException) {
             UtException utException = (UtException) throwable;
-            Map<String, Object> body = getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.ALL));
-
             Integer statusCode = utException.getStatus().value();
-
             return new ResponseEntity(new BaseResponse<>(statusCode, utException.getMessage(), null), utException.getStatus());
         }
         return super.error(request);
