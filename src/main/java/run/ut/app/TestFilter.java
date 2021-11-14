@@ -7,14 +7,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * @className: com.hrp.security.filter-> SqlInjectFilter
- * @description: SqlInjectFilter
- * @author: SXQ
- * @createDate: 2021-11-05 10:35
- * @version: 1.0
- * @todo: TODO
- */
 @WebFilter(urlPatterns = "/*", filterName = "sqlFilter")
 public class TestFilter implements Filter {
 

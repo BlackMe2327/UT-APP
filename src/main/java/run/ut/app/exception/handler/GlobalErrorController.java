@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorContro
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,11 +42,13 @@ public class GlobalErrorController extends BasicErrorController {
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
         log.error("进入error处理器");
         Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+        // 可以自定义一个handler取代下面的if else，这里为了demo足够简单先不管这么多
         if (throwable instanceof UtException) {
             UtException utException = (UtException) throwable;
             Integer statusCode = utException.getStatus().value();
             return new ResponseEntity(new BaseResponse<>(statusCode, utException.getMessage(), null), utException.getStatus());
+        } else {
+            return new ResponseEntity(new BaseResponse<>(500, "出现意料之外的错误", null), HttpStatus.valueOf(500));
         }
-        return super.error(request);
     }
 }
